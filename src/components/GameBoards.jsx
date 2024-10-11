@@ -1,52 +1,40 @@
-import { useState } from 'react';
+export default function GameBoard({ onSelectSquare, board }) {
+  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
-const initialGameBoard = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-];
+  // function handleSelectSquare(rowIndex, colIndex) {
+  //     setGameBoard((prevGameBoard) => {
+  //         const updatedBoard = [
+  //             ...prevGameBoard.map((innerArr) => [...innerArr]),
+  //         ];
+  //         updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
+  //         console.log(updatedBoard);
 
-export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-    const [gameBoard, setGameBoard] = useState(initialGameBoard);
+  //         return updatedBoard;
+  //     });
 
-    function handleSelectSquare(rowIndex, colIndex) {
-        setGameBoard((prevGameBoard) => {
-            const updatedBoard = [
-                ...prevGameBoard.map((innerArr) => [...innerArr]),
-            ];
-            updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-            console.log(updatedBoard);
+  //     onSelectSquare();
+  // }
 
-            return updatedBoard;
-        });
-
-        onSelectSquare();
-    }
-
-    return (
-        <ol id="game-board">
-            {gameBoard.map((row, rowIndex) => {
-                return (
-                    <li key={rowIndex}>
-                        <ol>
-                            {row.map((playerSymbol, elIndex) => (
-                                <li key={elIndex}>
-                                    <button
-                                        onClick={() => {
-                                            handleSelectSquare(
-                                                rowIndex,
-                                                elIndex
-                                            );
-                                        }}
-                                    >
-                                        {playerSymbol}
-                                    </button>
-                                </li>
-                            ))}
-                        </ol>
-                    </li>
-                );
-            })}
-        </ol>
-    );
+  return (
+    <ol id="game-board">
+      {board.map((row, rowIndex) => {
+        return (
+          <li key={rowIndex}>
+            <ol>
+              {row.map((playerSymbol, elIndex) => (
+                <li key={elIndex}>
+                  <button
+                    onClick={() => onSelectSquare(rowIndex, elIndex)}
+                    disabled={playerSymbol !== null}
+                  >
+                    {playerSymbol}
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </li>
+        );
+      })}
+    </ol>
+  );
 }
